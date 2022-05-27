@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Configurations>Debug;Release;Test</Configurations>
+    <Platforms>AnyCPU;ARM64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="sfml-audio">
+      <HintPath>Resources\sfml-audio.dll</HintPath>
+    </Reference>
+    <Reference Include="sfml-graphics">
+      <HintPath>Resources\sfml-graphics.dll</HintPath>
+    </Reference>
+    <Reference Include="sfml-system">
+      <HintPath>Resources\sfml-system.dll</HintPath>
+    </Reference>
+    <Reference Include="sfml-window">
+      <HintPath>Resources\sfml-window.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
