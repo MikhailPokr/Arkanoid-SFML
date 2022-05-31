@@ -96,7 +96,7 @@ namespace Arkanoid
         private static int _scoreWinMin = -1;
         private static int _scoreWinMax = -1;
         private static int _life = 3;
-        private static bool[] _powerUps = { false, false, false, true };
+        private static bool[] _powerUps = { false, true, false, true };
         private static int _currentPowerUp = 0;
         private static List<Block> _blocks = new();
         private static List<Ball> _balls = new();
@@ -105,7 +105,7 @@ namespace Arkanoid
         private static bool _win = false;
         private static float _might = 0;
         //рандом:
-        private static Random _random = new Random();
+        private static readonly Random _random = new Random();
 
         //основные методы игры:
         public static void Main()
@@ -454,12 +454,16 @@ namespace Arkanoid
                     return;
                 }
                 //проверка столкновений
-                if ((Position.X < Area.Left || Position.X > Area.Left + Area.Width) && _previousOverlap.Top != 0.1f)
+                if ((Position.X < Area.Left && _previousOverlap.Top != 0.1f || Position.X > Area.Left + Area.Width && _previousOverlap.Top != 0.2f))
                 {
                     _sound1.Play();
                     _direction.X *= -1;
                     _previousOverlap = default;
-                    _previousOverlap.Top = 0.1f;
+                    if (Position.X < Area.Left)
+                        _previousOverlap.Top = 0.1f;
+                    else
+                        _previousOverlap.Top = 0.2f;
+
                 }
                 if (Position.Y > Area.Top + Area.Height)
                 {
@@ -520,8 +524,9 @@ namespace Arkanoid
                 if (CheckCollision(Platform.Sprite, out overlap) && !overlap.Intersects(_previousOverlap))
                 {
                     _sound2.Play();
-                    _direction.Y *= -1;
-                    _direction.X = (Platform.Position - (overlap.Left + overlap.Width / 2)) / -20;
+                    Vector2f vector = new Vector2f(Position.X + 7 - Platform.Position + 1, Position.Y + 7 - 645 + 1);
+                    float vectorL = (float)Math.Sqrt(vector.X * vector.X + vector.Y * vector.Y);
+                    _direction = new(vector.X / vectorL, vector.Y / vectorL);
                     _previousOverlap = overlap;
                 }
                 
@@ -700,7 +705,7 @@ namespace Arkanoid
                             case 4:
                                 if (_powerUps[3])
                                 {
-                                    ball.ChangeSpeed(0.15f);
+                                    ball.ChangeSpeed(0.2f);
                                 }
                                 _powerUps[3] = true;
                                 break;
@@ -825,7 +830,12 @@ namespace Arkanoid
             if (_redirectionMode)
             {
                 if (_playZone.Contains(e.X, e.Y))
+                {
+                    _mainWindow.SetMouseCursorVisible(false);
                     _targetMark.Position = new(e.X - 12, e.Y - 12);
+                }
+                else
+                    _mainWindow.SetMouseCursorVisible(true);
                 return;
             }
             if (Platform.KeyboardMode && (e.X > Platform.MaxPosition || e.X < Platform.MinPosition))
@@ -1011,7 +1021,7 @@ namespace Arkanoid
                         case 3:
                             foreach (Ball ball in _balls)
                             {
-                                ball.ChangeSpeed(0.3f);
+                                ball.ChangeSpeed(0.4f);
                             }
                             break;
                     }
