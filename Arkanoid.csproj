@@ -7,7 +7,13 @@
     <Nullable>enable</Nullable>
     <Configurations>Debug;Release;Test</Configurations>
     <Platforms>AnyCPU;ARM64</Platforms>
+    <ApplicationIcon>bin\Debug\net6.0\Icon.ico</ApplicationIcon>
+    <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="bin\Debug\net6.0\Icon.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <Reference Include="sfml-audio">

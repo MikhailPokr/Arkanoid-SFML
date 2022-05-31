@@ -96,7 +96,7 @@ namespace Arkanoid
         private static int _scoreWinMin = -1;
         private static int _scoreWinMax = -1;
         private static int _life = 3;
-        private static bool[] _powerUps = { false, true, false, true };
+        private static bool[] _powerUps = { false, false, false, true };
         private static int _currentPowerUp = 0;
         private static List<Block> _blocks = new();
         private static List<Ball> _balls = new();
