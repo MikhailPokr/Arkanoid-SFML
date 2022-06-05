@@ -431,15 +431,13 @@ namespace Arkanoid
                 _direction = direction;
                 Area = area;
             }
-            public void Move(IntRect area = default)
+            public void Move()
             {
                 if (_redirectionMode)
                     return;
-                if (area != default)
-                    Area = area;
-                float y = (float)(_direction.Y * Speed / Math.Sqrt(_direction.X * _direction.X + _direction.Y * _direction.Y));
-                float x = _direction.X * y / _direction.Y;
-                Position += new Vector2f(x, y);
+                float length = (float)Math.Sqrt(_direction.X * _direction.X + _direction.Y * _direction.Y);
+                _direction /= length;
+                Position += _direction * Speed;
                 _sprite.Position = Position;
 
                 //проверка выигрыша
